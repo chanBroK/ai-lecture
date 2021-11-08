@@ -4,3 +4,5 @@
 /.idea/
 *.png
 */raw/*
+/Week11/data/
+/Week11/MNIST_data/
