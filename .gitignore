@@ -3,4 +3,4 @@
 *.csv
 /.idea/
 *.png
-
+*/raw/*
