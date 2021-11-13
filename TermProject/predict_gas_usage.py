@@ -59,3 +59,9 @@ for epoch in range(epochs + 1):
     optim.step()
     if epoch % (epochs / 10) == 0:
         print(epoch, cost.item())
+
+# submission
+with torch.no_grad():
+    predict = model(test_x)
+    predict = predict.cpu().detach()
+    print(predict)
