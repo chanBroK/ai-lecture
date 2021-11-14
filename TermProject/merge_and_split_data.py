@@ -48,12 +48,14 @@ def get_merge_df(year, match_dict):
 def split_df(df):
     train_df = df[df["year"] != 2008]
     test_df = df[df["year"] == 2008]
-    submission_df = test_df["gas_usage"]
-    submission_df.to_csv("./data/submission.csv")
-    submission_df = pd.read_csv("./data/submission.csv")
-    submission_df.rename(columns={"Unnamed: 0": "id"})
+    answer_df = test_df["gas_usage"]
+    answer_df.to_csv("./data/submission.csv")
+    answer_df = pd.read_csv("./data/submission.csv")
+    answer_df = answer_df.rename(columns={"Unnamed: 0": "id"})
+    submission_df = answer_df.copy()
+    submission_df["gas_usage"] = 0
     test_df = test_df.drop(["gas_usage"], axis=1)
-    return train_df, test_df, submission_df
+    return train_df, test_df, answer_df, submission_df
 
 
 match_dict = get_match_observatory_dict()
@@ -66,9 +68,10 @@ for year in years:
     else:
         merged_df = pd.concat([merged_df, get_merge_df(year, match_dict)], axis=0)
 
-train_df, test_df, submission_df = split_df(merged_df)
+train_df, test_df, answer_df, submission_df = split_df(merged_df)
 
 merged_df.to_csv("./data/merged_data.csv", index=False)
 train_df.to_csv("./data/train_data.csv", index=False)
 test_df.to_csv("./data/test_data.csv", index=False)
+answer_df.to_csv("./data/answer.csv", index=False)
 submission_df.to_csv("./data/submission.csv", index=False)

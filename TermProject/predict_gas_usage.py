@@ -50,8 +50,8 @@ model = torch.nn.Sequential(layer1, relu, layer2).to(device)
 # epochs = 1000
 # lr = 1e-3
 # 일때 val_cost = 70.99
-epochs = 1000
-lr = 1e-3
+epochs = 2000
+lr = 1e-4
 loss = torch.nn.MSELoss()
 optim = torch.optim.Adam(model.parameters(), lr=lr)
 
@@ -59,9 +59,16 @@ optim = torch.optim.Adam(model.parameters(), lr=lr)
 for epoch in range(epochs + 1):
     output = model(train_x)
     cost = loss(output, train_y.unsqueeze(1))
-    val_cost = loss(model(test_x), val_y.unsqueeze(1))
+    # val_cost = loss(model(test_x), val_y.unsqueeze(1))
     optim.zero_grad()
     cost.backward()
     optim.step()
     if epoch % (epochs / 10) == 0:
-        print(epoch, cost.item(), val_cost.item())
+        print(epoch, cost.item())
+
+with torch.no_grad():
+    predict = model(test_x)
+    cost = loss(predict, val_y.unsqueeze(1))
+    print(cost.item())
+
+# kaggle과 local에서 계산이 다르다
