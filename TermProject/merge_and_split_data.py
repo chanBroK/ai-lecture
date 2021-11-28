@@ -70,7 +70,7 @@ for year in years:
 
 train_df, test_df, answer_df, submission_df = split_df(merged_df)
 
-merged_df.to_csv("./data/merged_data.csv", index=False)
+merged_df.to_csv("./data/merged_data.csv", index=False,encoding="euc-kr")
 train_df.to_csv("./data/train_data.csv", index=False)
 test_df.to_csv("./data/test_data.csv", index=False)
 answer_df.to_csv("./data/answer.csv", index=False)
